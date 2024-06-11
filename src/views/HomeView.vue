@@ -19,10 +19,10 @@ import Fvidereuddannelse from "@/components/Fvidereuddannelse.vue";
     <div class="content-wrap">
       <Fstudiestart />
       <FUdannelsensOpbygning />
+      <Fvidereuddannelse />
       <FAi />
       <Fpraktik />
       <FKVmuligheder />
-      <Fvidereuddannelse />
       <FInternationalemuligheder />
       <FGenveje />
       <FEvent />

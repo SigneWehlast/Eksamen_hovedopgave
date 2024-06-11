@@ -161,13 +161,29 @@
       </div>
     </div>
 
-    <button class="btn-yellow">
+    <div>
+      <a href="/src/assets/PDF/Karrieretjekliste.pdf" target="_blank" class="download-file">Download karriere tjeklisten som PDF</a>
+    </div>
+
+    <button class="btn-yellow btn-guide-tjekliste">
       Guide: Bliv klar til din karriere gennem hele din uddannelse
     </button>
   </section>
 </template>
 
 <style scoped>
+
+.download-file {
+  position: relative;
+  top: 20px;
+  color: #1a424b;
+}
+
+.btn-guide-tjekliste {
+  position: relative;
+  top: 20px;
+}
+
 @media screen and (max-width: 700px) {
   .btn-yellow {
     text-align: left;
