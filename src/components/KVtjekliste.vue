@@ -1,7 +1,7 @@
 <script></script>
 
 <template>
-  <section id="tjekliste-baggrund">
+  <section id="tjekliste">
     <h2 class="italic">Karriere tjekliste</h2>
 
     <div class="flex-overordnet">

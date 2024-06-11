@@ -56,7 +56,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section id="reviews_section">
+  <section id="hsds">
     <h2>Hvad siger de studerende?</h2>
     <div class="reviews_container">
       <transition-group name="carousel" tag="div" class="reviews_wrapper">
@@ -107,7 +107,7 @@ onMounted(() => {
 
 <style scoped>
 @media screen and (max-width: 700px) {
-  #reviews_section {
+  #hsds {
     display: flex;
     flex-direction: column;
   }
