@@ -230,7 +230,7 @@ button {
 /* Nu slutter reviews style  */
 
 /*Tjekliste*/
-#tjekliste-baggrund {
+#tjekliste {
   background-image: url("../assets/img/tjekliste.jpg");
   background-repeat: no-repeat;
   background-size: cover;

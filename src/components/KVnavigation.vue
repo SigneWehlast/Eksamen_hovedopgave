@@ -55,9 +55,6 @@ const scrollToElement = (elementId) => {
 
 const handleScroll = () => {
   const scrollPosition = window.scrollY;
-  const windowHeight = window.innerHeight;
-
-  // Juster disse værdier baseret på dit layout
   const offset = 100; // Offset for aktivitetsændring
   const sectionIds = ['hkvt', 'bdk', 'tjekliste', 'hsds', 'jobp', 'arrang', 'kontaktka']; // Liste over afsnit id'er
 
@@ -77,20 +74,19 @@ const handleScroll = () => {
 const setActiveNavItem = (itemId) => {
   const navItems = document.querySelectorAll("ul li");
   navItems.forEach((item) => {
-    item.style.opacity = item.id === `nav-${itemId}` ? 1 : 0.5;
+    item.style.opacity = item.id === `nav-${itemId}` ? '1' : '0.5';
   });
 };
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
+  // Aktiver det første navigationspunkt ved starten
+  setActiveNavItem('hkvt');
 });
 
 onUnmounted(() => {
   window.removeEventListener("scroll", handleScroll);
 });
-
-// Aktiver det første navigationspunkt ved starten
-setActiveNavItem('hkvt');
 </script>
 
 <style scoped>
@@ -196,4 +192,3 @@ li {
   }
 }
 </style>
-
