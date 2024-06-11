@@ -1,3 +1,63 @@
+<script>
+import { onMounted, ref } from "vue"; 
+
+export default {
+  data() {
+    return {
+      isVisible: false,
+      showButton: false,
+      email: '',
+      question: ''
+    };
+  },
+  methods: {
+    togglePopup() {
+      this.isVisible = !this.isVisible;
+    },
+    async submitForm() {
+      const data = {
+        email: this.email,
+        question: this.question
+      };
+
+      try {
+        const response = await fetch("https://forbedring-hovedopgave-default-rtdb.europe-west1.firebasedatabase.app/Chat.json", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const result = await response.json();
+        alert('Form submitted successfully');
+        console.log(result);
+      } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        alert('There was an error submitting the form');
+      }
+
+      this.email = '';
+      this.question = '';
+      this.togglePopup();
+    },
+    handleScroll() {
+      this.showButton = window.scrollY > 100;
+    }
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+};
+</script>
+
 <template>
   <div id="app">
     <button v-if="showButton" class="toggle-button" @click="togglePopup">Stil et spørgsmål!</button>
@@ -21,43 +81,9 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      isVisible: false,
-      showButton: false,
-      email: '',
-      question: ''
-    };
-  },
-  methods: {
-    togglePopup() {
-      this.isVisible = !this.isVisible;
-    },
-    submitForm() {
-      // Handle form submission
-      alert(`Email: ${this.email}\nQuestion: ${this.question}`);
-      this.email = '';
-      this.question = '';
-      this.togglePopup();
-    },
-    handleScroll() {
-      this.showButton = window.scrollY > 100;
-    }
-  },
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll);
-  },
-  beforeDestroy() {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
-};
-</script>
-
 <style scoped>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  
   text-align: center;
   margin-top: 60px;
 }
