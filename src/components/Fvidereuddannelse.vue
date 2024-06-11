@@ -64,7 +64,7 @@ function toggleDropdown(index) {
     </div>
   </section>
   <section>
-    <h3>Byg ovenpå uddannelsen og bliv bachelor</h3>
+    <h3 id="h3_byg_ovenpå">Byg ovenpå uddannelsen og bliv bachelor</h3>
     <div class="buttom-divider">
       <div class="buttom-divider-width">
         <p>
@@ -93,6 +93,11 @@ function toggleDropdown(index) {
 </template>
 
 <style scoped>
+#h3_byg_ovenpå{
+  Font-size:48px;
+  line-height: 50px;
+}
+
 .dropdown-wrap {
   margin-top: 5px;
   background-color: #fff;
