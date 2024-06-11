@@ -8,6 +8,7 @@ import KVkontaktUCL from "@/components/KVkontaktUCL.vue";
 import KVnavigation from "@/components/KVnavigation.vue";
 import KVbookKarrierevejledning from "@/components/KVbookKarrierevejledning.vue";
 import KVtop from "@/components/KVtop.vue";
+import KVchatbot from "@/components/KVchatbot.vue";
 </script>
 
 <template>
@@ -24,6 +25,7 @@ import KVtop from "@/components/KVtop.vue";
       <KVjobportalen />
       <KVarrangementer />
       <KVkontaktUCL />
+      <KVchatbot />
     </div>
   </div>
 </template>
