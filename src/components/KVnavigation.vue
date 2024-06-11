@@ -1,45 +1,3 @@
-<script setup>
-import { ref } from "vue";
-
-const isNavOpen = ref(false);
-
-const toggleNav = () => {
-  isNavOpen.value = !isNavOpen.value;
-};
-
-const hkvtScroll = () => {
-  document.getElementById("hkvt").scrollIntoView({ behavior: "smooth" });
-};
-
-const bdkScroll = () => {
-  document.getElementById("bdk").scrollIntoView({ behavior: "smooth" });
-};
-
-const tjeklisteScroll = () => {
-  document
-    .getElementById("tjekliste-baggrund")
-    .scrollIntoView({ behavior: "smooth" });
-};
-
-const hsdsScroll = () => {
-  document
-    .getElementById("reviews_section")
-    .scrollIntoView({ behavior: "smooth" });
-};
-
-const jobpScroll = () => {
-  document.getElementById("jobp").scrollIntoView({ behavior: "smooth" });
-};
-
-const arrangScroll = () => {
-  document.getElementById("arrang").scrollIntoView({ behavior: "smooth" });
-};
-
-const kontaktkaScroll = () => {
-  document.getElementById("kontaktka").scrollIntoView({ behavior: "smooth" });
-};
-</script>
-
 <template>
   <nav>
     <div class="nav-inner" @click="toggleNav">
@@ -49,68 +7,99 @@ const kontaktkaScroll = () => {
       </div>
 
       <ul :class="{ 'nav-open': isNavOpen }">
-        <li @click="hkvtScroll()">
+        <li id="nav-hkvt" @click="scrollToElement('hkvt')">
           Hvad kan vi tilbyde?
-          <img
-            class="mobile-arrow"
-            src="../assets/img/arrow-white.svg"
-            alt=""
-          />
+          <img class="mobile-arrow" src="../assets/img/arrow-white.svg" alt="" />
         </li>
-        <li @click="bdkScroll()">
+        <li id="nav-bdk" @click="scrollToElement('bdk')">
           Book en vejledning
-          <img
-            class="mobile-arrow"
-            src="../assets/img/arrow-white.svg"
-            alt=""
-          />
+          <img class="mobile-arrow" src="../assets/img/arrow-white.svg" alt="" />
         </li>
-        <li @click="tjeklisteScroll()">
+        <li id="nav-tjekliste" @click="scrollToElement('tjekliste')">
           Karriere tjekliste
-          <img
-            class="mobile-arrow"
-            src="../assets/img/arrow-white.svg"
-            alt=""
-          />
+          <img class="mobile-arrow" src="../assets/img/arrow-white.svg" alt="" />
         </li>
-        <li @click="hsdsScroll()">
+        <li id="nav-hsds" @click="scrollToElement('hsds')">
           Hvad siger de studerende?
-          <img
-            class="mobile-arrow"
-            src="../assets/img/arrow-white.svg"
-            alt=""
-          />
+          <img class="mobile-arrow" src="../assets/img/arrow-white.svg" alt="" />
         </li>
-        <li @click="jobpScroll()">
+        <li id="nav-jobp" @click="scrollToElement('jobp')">
           Jobportalen
-          <img
-            class="mobile-arrow"
-            src="../assets/img/arrow-white.svg"
-            alt=""
-          />
+          <img class="mobile-arrow" src="../assets/img/arrow-white.svg" alt="" />
         </li>
-        <li @click="arrangScroll()">
+        <li id="nav-arrang" @click="scrollToElement('arrang')">
           Arrangementer
-          <img
-            class="mobile-arrow"
-            src="../assets/img/arrow-white.svg"
-            alt=""
-          />
+          <img class="mobile-arrow" src="../assets/img/arrow-white.svg" alt="" />
         </li>
-        <li @click="kontaktkaScroll()">
+        <li id="nav-kontaktka" @click="scrollToElement('kontaktka')">
           Kontakt karrierevejledningen
-          <img
-            class="mobile-arrow"
-            src="../assets/img/arrow-white.svg"
-            alt=""
-          />
+          <img class="mobile-arrow" src="../assets/img/arrow-white.svg" alt="" />
         </li>
       </ul>
     </div>
   </nav>
 </template>
 
+<script setup>
+import { ref, onMounted, onUnmounted } from "vue";
+
+const isNavOpen = ref(false);
+
+const toggleNav = () => {
+  isNavOpen.value = !isNavOpen.value;
+};
+
+const scrollToElement = (elementId) => {
+  document.getElementById(elementId).scrollIntoView({ behavior: "smooth" });
+};
+
+const handleScroll = () => {
+  const scrollPosition = window.scrollY;
+  const windowHeight = window.innerHeight;
+
+  // Juster disse værdier baseret på dit layout
+  const offset = 100; // Offset for aktivitetsændring
+  const sectionIds = ['hkvt', 'bdk', 'tjekliste', 'hsds', 'jobp', 'arrang', 'kontaktka']; // Liste over afsnit id'er
+
+  sectionIds.forEach((sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.offsetHeight;
+
+    if (scrollPosition >= sectionTop - offset && scrollPosition < sectionTop + sectionHeight - offset) {
+      setActiveNavItem(sectionId);
+    }
+  });
+};
+
+const setActiveNavItem = (itemId) => {
+  const navItems = document.querySelectorAll("ul li");
+  navItems.forEach((item) => {
+    item.style.opacity = item.id === `nav-${itemId}` ? 1 : 0.5;
+  });
+};
+
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
+
+// Aktiver det første navigationspunkt ved starten
+setActiveNavItem('hkvt');
+</script>
+
 <style scoped>
+/* Your existing styles remain unchanged */
+
+#nav-hkvt {
+  opacity: 1; /* Initially set the first item as active */
+}
+
 nav {
   display: flex;
   flex-direction: column;
@@ -207,3 +196,4 @@ li {
   }
 }
 </style>
+
