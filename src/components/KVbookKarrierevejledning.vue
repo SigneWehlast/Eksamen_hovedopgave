@@ -158,6 +158,7 @@ export default {
   },
 };
 </script>
+
 <template>
   <section id="bdk">
     <h2>Book en vejledning</h2>
@@ -270,8 +271,13 @@ export default {
 
       <ul class="days">
         <li
-          v-for="day in days"
-          :class="{ active: day.active, inactive: !day.active }"
+          v-for="(day, index) in days"
+          :class="{ 
+            active: day.active, 
+            inactive: !day.active,
+            'full-opacity': index % 7 === 2 || index % 7 === 3,
+            'reduced-opacity': !(index % 7 === 2 || index % 7 === 3)
+          }"
           @click="showInputBox(day.date)"
         >
           {{ day.date }}
@@ -499,5 +505,13 @@ export default {
 #input-input-felter-box-besked {
   display: flex;
   height: 100px;
+}
+
+.full-opacity {
+  opacity: 1;
+}
+
+.reduced-opacity {
+  opacity: 0.5;
 }
 </style>
