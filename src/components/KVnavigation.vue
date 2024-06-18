@@ -7,32 +7,14 @@
       </div>
 
       <ul :class="{ 'nav-open': isNavOpen }">
-        <li id="nav-hkvt" @click="scrollToElement('hkvt')">
-          Hvad kan vi tilbyde?
-          <img class="mobile-arrow" src="../assets/img/arrow-white.svg" alt="" />
-        </li>
-        <li id="nav-bdk" @click="scrollToElement('bdk')">
-          Book en vejledning
-          <img class="mobile-arrow" src="../assets/img/arrow-white.svg" alt="" />
-        </li>
-        <li id="nav-tjekliste" @click="scrollToElement('tjekliste')">
-          Karriere tjekliste
-          <img class="mobile-arrow" src="../assets/img/arrow-white.svg" alt="" />
-        </li>
-        <li id="nav-hsds" @click="scrollToElement('hsds')">
-          Hvad siger de studerende?
-          <img class="mobile-arrow" src="../assets/img/arrow-white.svg" alt="" />
-        </li>
-        <li id="nav-jobp" @click="scrollToElement('jobp')">
-          Jobportalen
-          <img class="mobile-arrow" src="../assets/img/arrow-white.svg" alt="" />
-        </li>
-        <li id="nav-arrang" @click="scrollToElement('arrang')">
-          Arrangementer
-          <img class="mobile-arrow" src="../assets/img/arrow-white.svg" alt="" />
-        </li>
-        <li id="nav-kontaktka" @click="scrollToElement('kontaktka')">
-          Kontakt karrierevejledningen
+        <li
+          v-for="section in sections"
+          :key="section.id"
+          :id="`nav-${section.id}`"
+          :class="{ active: activeSection === section.id }"
+          @click="scrollToElement(section.id)"
+        >
+          {{ section.label }}
           <img class="mobile-arrow" src="../assets/img/arrow-white.svg" alt="" />
         </li>
       </ul>
@@ -44,6 +26,17 @@
 import { ref, onMounted, onUnmounted } from "vue";
 
 const isNavOpen = ref(false);
+const activeSection = ref("hkvt");
+
+const sections = [
+  { id: "hkvt", label: "Hvad kan vi tilbyde?" },
+  { id: "bdk", label: "Book en vejledning" },
+  { id: "tjekliste", label: "Karriere tjekliste" },
+  { id: "hsds", label: "Hvad siger de studerende?" },
+  { id: "jobp", label: "Jobportalen" },
+  { id: "arrang", label: "Arrangementer" },
+  { id: "kontaktka", label: "Kontakt karrierevejledningen" },
+];
 
 const toggleNav = () => {
   isNavOpen.value = !isNavOpen.value;
@@ -56,32 +49,24 @@ const scrollToElement = (elementId) => {
 const handleScroll = () => {
   const scrollPosition = window.scrollY;
   const offset = 100; // Offset for aktivitetsændring
-  const sectionIds = ['hkvt', 'bdk', 'tjekliste', 'hsds', 'jobp', 'arrang', 'kontaktka']; // Liste over afsnit id'er
 
-  sectionIds.forEach((sectionId) => {
-    const section = document.getElementById(sectionId);
-    if (!section) return;
+  sections.forEach((section) => {
+    const element = document.getElementById(section.id);
+    if (!element) return;
 
-    const sectionTop = section.offsetTop;
-    const sectionHeight = section.offsetHeight;
+    const sectionTop = element.offsetTop;
+    const sectionHeight = element.offsetHeight;
 
     if (scrollPosition >= sectionTop - offset && scrollPosition < sectionTop + sectionHeight - offset) {
-      setActiveNavItem(sectionId);
+      activeSection.value = section.id;
     }
-  });
-};
-
-const setActiveNavItem = (itemId) => {
-  const navItems = document.querySelectorAll("ul li");
-  navItems.forEach((item) => {
-    item.style.opacity = item.id === `nav-${itemId}` ? '1' : '0.5';
   });
 };
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
   // Aktiver det første navigationspunkt ved starten
-  setActiveNavItem('hkvt');
+  activeSection.value = 'hkvt';
 });
 
 onUnmounted(() => {
@@ -90,11 +75,6 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* Your existing styles remain unchanged */
-
-#nav-hkvt {
-  opacity: 1; /* Initially set the first item as active */
-}
 
 nav {
   display: flex;
@@ -184,6 +164,12 @@ ul {
 li {
   display: flex;
   justify-content: space-between;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+li.active {
+  opacity: 1;
 }
 
 @media screen and (max-width: 465px) {

@@ -158,6 +158,7 @@ export default {
   },
 };
 </script>
+
 <template>
   <section id="bdk">
     <h2>Book en vejledning</h2>
@@ -325,6 +326,12 @@ export default {
   cursor: pointer;
   position: relative;
   margin-top: 30px;
+  opacity: 0.5; /* Default opacity */
+}
+
+.calendar .days li:nth-child(7n+3),
+.calendar .days li:nth-child(7n+4) {
+  opacity: 1 !important; /* Ensure third and fourth items have full opacity */
 }
 
 .days li.inactive {
