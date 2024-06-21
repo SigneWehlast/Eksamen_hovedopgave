@@ -1,6 +1,4 @@
 <script>
-import { ref } from "vue";
-
 export default {
   data() {
     return {
@@ -98,12 +96,14 @@ export default {
       }
       this.renderCalendar();
     },
-    showInputBox(day) {
-      this.showInput = true;
-      this.dayClicked = day;
-      this.selectedDate.day = day;
-      this.selectedDate.month = this.currMonth + 1;
-      this.selectedDate.year = this.currYear;
+    showInputBox(day, index) {
+      if ((index % 7 === 2) || (index % 7 === 3)) {
+        this.showInput = true;
+        this.dayClicked = day;
+        this.selectedDate.day = day;
+        this.selectedDate.month = this.currMonth + 1;
+        this.selectedDate.year = this.currYear;
+      }
     },
     hideInputBox() {
       this.showInput = false;
@@ -158,6 +158,7 @@ export default {
   },
 };
 </script>
+
 
 <template>
   <section id="bdk">
@@ -271,9 +272,9 @@ export default {
 
       <ul class="days">
         <li
-          v-for="day in days"
-          :class="{ active: day.active, inactive: !day.active }"
-          @click="showInputBox(day.date)"
+          v-for="(day, index) in days"
+          :class="{ active: day.active, inactive: !day.active, clickable: (index % 7 === 2 || index % 7 === 3) }"
+          @click="showInputBox(day.date, index)"
         >
           {{ day.date }}
         </li>
@@ -281,6 +282,7 @@ export default {
     </div>
   </section>
 </template>
+
 
 <style scoped>
 .current-date {
@@ -326,12 +328,7 @@ export default {
   cursor: pointer;
   position: relative;
   margin-top: 30px;
-  opacity: 0.5; /* Default opacity */
-}
-
-.calendar .days li:nth-child(7n+3),
-.calendar .days li:nth-child(7n+4) {
-  opacity: 1 !important; /* Ensure third and fourth items have full opacity */
+  opacity: 0.5;
 }
 
 .days li.inactive {
@@ -340,6 +337,10 @@ export default {
 
 .days li.active {
   color: #fff;
+}
+
+.days li.clickable {
+  opacity: 1 !important;
 }
 
 .days li::before {
