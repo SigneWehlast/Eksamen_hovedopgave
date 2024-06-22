@@ -406,9 +406,6 @@ export default {
   border: 1px solid #1a424b;
 }
 
-#input-input-felter-box-besked {
-}
-
 .input-hide-box-3 {
   margin-left: 170px;
 }
